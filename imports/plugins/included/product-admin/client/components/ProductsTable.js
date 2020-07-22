@@ -4,6 +4,7 @@ import i18next from "i18next";
 import { useHistory } from "react-router-dom";
 import DataTable, { useDataTable } from "@reactioncommerce/catalyst/DataTable";
 import Button from "@reactioncommerce/catalyst/Button";
+import Select from "@reactioncommerce/catalyst/Select";
 import decodeOpaqueId from "@reactioncommerce/api-utils/decodeOpaqueId.js";
 import encodeOpaqueId from "@reactioncommerce/api-utils/encodeOpaqueId.js";
 import { useSnackbar } from "notistack";
@@ -23,13 +24,23 @@ import MediaCell from "./DataTable/MediaCell";
 import PublishedStatusCell from "./DataTable/PublishedStatusCell";
 import FilterByFileCard from "./FilterByFileCard";
 import TagSelector from "./TagSelector";
+import useAuth from "/imports/client/ui/hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   card: {
     overflow: "visible"
   },
   cardHeader: {
-    paddingBottom: 0
+    paddingBottom: 0,
+    flexGrow: 0
+  },
+  cardTitle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  shopSelector: {
+    width: "300px"
   },
   selectedProducts: {
     fontWeight: 400,
@@ -60,6 +71,14 @@ function ProductsTable() {
   const history = useHistory();
   const [shopId] = useCurrentShopId();
   const [createProduct, { error: createProductError }] = useMutation(createProductMutation);
+  const { viewer } = useAuth();
+
+  const userShopOptions = viewer && viewer.adminUIShops && viewer.adminUIShops.map((shop) => ({
+    value: shop._id,
+    label: shop.name
+  }));
+
+  const [selectedShops, setSelectedShops] = useState(viewer && viewer.adminUIShops && viewer.adminUIShops.map((shop) => shop._id));
 
   // React-Table state
   const [isLoading, setIsLoading] = useState(false);
@@ -430,9 +449,18 @@ function ProductsTable() {
   const classes = useStyles();
   const selectedProducts = selectedRows.length ? `${selectedRows.length} selected` : "";
   const cardTitle = (
-    <Fragment>
-      {i18next.t("admin.products")}<span className={classes.selectedProducts}>{selectedProducts}</span>
-    </Fragment>
+    <div className={classes.cardTitle}>
+      <span>{i18next.t("admin.products")}<span className={classes.selectedProducts}>{selectedProducts}</span></span>
+
+      <Select
+        isMulti
+        className={classes.shopSelector}
+        onSelection={setSelectedShops}
+        options={userShopOptions}
+        placeholder="Select shops"
+        value={selectedShops}
+      />
+    </div>
   );
 
   return (
