@@ -155,7 +155,7 @@ function ProductsTable() {
     const { data } = await apolloClient.query({
       query: productsQuery,
       variables: {
-        shopIds: [shopId],
+        shopIds: selectedShops ? selectedShops.map((selectedShop) => selectedShop.value) : [],
         ...filterByProductIds,
         query: globalFilter,
         first: pageSize,
@@ -170,7 +170,7 @@ function ProductsTable() {
     setPageCount(Math.ceil(data.products.totalCount / pageSize));
 
     setIsLoading(false);
-  }, [apolloClient, shopId]);
+  }, [apolloClient, selectedShops]);
 
   // Row click callback
   const onRowClick = useCallback(async ({ row }) => {
@@ -455,7 +455,7 @@ function ProductsTable() {
       <Select
         isMulti
         className={classes.shopSelector}
-        onSelection={setSelectedShops}
+        onSelection={(selection) => setSelectedShops([...selection])}
         options={userShopOptions}
         placeholder="Select shops"
         value={selectedShops}
