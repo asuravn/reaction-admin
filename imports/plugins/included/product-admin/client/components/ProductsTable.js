@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useApolloClient, useMutation } from "@apollo/react-hooks";
 import i18next from "i18next";
 import { useHistory } from "react-router-dom";
@@ -78,7 +78,20 @@ function ProductsTable() {
     label: shop.name
   }));
 
-  const [selectedShops, setSelectedShops] = useState(viewer && viewer.adminUIShops && viewer.adminUIShops.map((shop) => shop._id));
+  let preSelectedShop;
+
+  if (userShopOptions && userShopOptions.length === 1) {
+    preSelectedShop = userShopOptions[0];
+  }
+
+  const [selectedShops, setSelectedShops] = useState();
+
+  // Pre-select shop on first render if user has only access to one
+  useEffect(() => {
+    if (preSelectedShop && !selectedShops) {
+      setSelectedShops([preSelectedShop]);
+    }
+  }, [preSelectedShop, selectedShops]);
 
   // React-Table state
   const [isLoading, setIsLoading] = useState(false);
