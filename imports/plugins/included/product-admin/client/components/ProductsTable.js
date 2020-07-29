@@ -78,11 +78,7 @@ function ProductsTable() {
     label: shop.name
   }));
 
-  let preSelectedShop;
-
-  if (userShopOptions && userShopOptions.length === 1) {
-    preSelectedShop = userShopOptions[0];
-  }
+  const preSelectedShop = userShopOptions && userShopOptions.length === 1 && userShopOptions[0];
 
   const [selectedShops, setSelectedShops] = useState();
 
@@ -183,7 +179,7 @@ function ProductsTable() {
     setPageCount(Math.ceil(data.products.totalCount / pageSize));
 
     setIsLoading(false);
-  }, [apolloClient, selectedShops]);
+  }, [apolloClient, selectedShops, shopId]);
 
   // Row click callback
   const onRowClick = useCallback(async ({ row }) => {
