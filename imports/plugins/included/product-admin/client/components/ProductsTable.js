@@ -464,7 +464,7 @@ function ProductsTable() {
       <Select
         isMulti
         className={classes.shopSelector}
-        onSelection={(selection) => setSelectedShops([...selection])}
+        onSelection={(selection) => setSelectedShops(selection ? [...selection] : [])}
         options={userShopOptions}
         placeholder="Select shops"
         value={selectedShops}
