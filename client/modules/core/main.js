@@ -49,7 +49,7 @@ export default {
    * @memberof Core/Client
    * @private
    */
-  marketplace: { _ready: false },
+  marketplace: { _ready: true },
 
   /**
    * @summary Initialization code
@@ -326,9 +326,9 @@ export default {
     // Give preference to shop chosen by the user
     const activeShopId = this.getUserShopId();
     if (activeShopId) return Shops.findOne({ _id: activeShopId });
-
+    return null;
     // If no chosen shop, fall back to primary shop
-    return Shops.findOne({ shopType: "primary" });
+    // return Shops.findOne({ shopType: "primary" });
   },
 
   /**
@@ -341,7 +341,7 @@ export default {
   getUserShopId() {
     const preferences = userPrefs.get(); // reactivity on `profile.preferences` changes only
     if (!preferences) return null;
-
+    
     return _.get(preferences, "reaction.activeShopId");
   },
 

@@ -8,3 +8,7 @@ import { Meteor } from "meteor/meteor";
 export function getUserId() {
   return Meteor.userId();
 }
+
+export function getUser() {
+  return Meteor.user();
+}

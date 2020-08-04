@@ -19,7 +19,6 @@ services:
     # it, because now `reactioncommerce/admin:trunk` would actually be your dev image.
     # To work around this issue, we specify a different tag name here, which does not
     # match any of our published tags.
-    image: reactioncommerce/admin:local-dev
     build:
       context: .
       dockerfile: Dockerfile-dev
