@@ -1,7 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { Shops, Accounts } from "/lib/collections";
-import Reaction from "/imports/plugins/core/core/server/Reaction";
-import {getUserId} from "../../Reaction/accountUtils";
+import { Shops } from "/lib/collections";
 
 Meteor.publish("PrimaryShop", () => Shops.find({
   shopType: "primary"
@@ -9,11 +7,14 @@ Meteor.publish("PrimaryShop", () => Shops.find({
   limit: 1
 }));
 
-Meteor.publish("MyShop", function publishMyShop() {
-  const user = Reaction.getUser();
-  if (!user) {
-    return this.ready();
-  }
-  console.log('Reaction.getShopId()', user);
-  return Shops.find({})
+Meteor.publish("UserShop", () => {
+  const user = Meteor.users.findOne(Meteor.userId(), { fields: { profile: 1 } });
+  console.log(user);
+  const { profile } = user;
+  const shopId = profile &&
+    profile.preferences &&
+    profile.preferences.reaction &&
+    profile.preferences.reaction.activeShopId;
+
+  return Shops.find({ _id: shopId });
 });

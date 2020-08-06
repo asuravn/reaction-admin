@@ -48,6 +48,7 @@ export default function useCurrentShop() {
       variables: { id: shopId }
     });
   }
+
   return {
     isLoadingShop: loading,
     refetchShop: refetch,
