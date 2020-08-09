@@ -143,7 +143,6 @@ export default {
       // get unique shops from groups (there may be multiple groups from one shop)
       const allShopIds = groups.map((group) => group.shopId);
       const uniqueShopIds = _.uniq(allShopIds);
-      console.log(groups, uniqueShopIds);
       // get all groups for shop
       // flatten all group arrays into a single array
       // remove duplicate permissions
@@ -152,7 +151,12 @@ export default {
         const groupPermissionsForShop = groups.filter((group) => group.shopId === shopId).map((group) => group.permissions);
         const flattenedGroupPermissionsForShop = _.flattenDeep(groupPermissionsForShop);
         const uniquePermissionsForShop = _.uniq(flattenedGroupPermissionsForShop);
-        accountPermissions[shopId] = uniquePermissionsForShop;
+        
+        if (shopId) {
+          accountPermissions[shopId] = uniquePermissionsForShop;
+        } else {
+          accountPermissions['global'] = uniquePermissionsForShop;
+        }
       });
     }
 
@@ -182,7 +186,11 @@ export default {
       // TODO: Review this way of granting global access for owners
       permissions.push("owner");
       permissions = _.uniq(permissions);
-      console.log(accountPermissions, permissionsGroup);
+      
+      if (accountPermissions['global'] && accountPermissions['global'].some((permission) => permissions.includes(permission))) {
+        return true;
+      }
+      
       // if accountPermissions includes any of permissions, then we return true
       return !!accountPermissions[permissionsGroup] && accountPermissions[permissionsGroup].some((permission) => permissions.includes(permission));
     }

@@ -11,6 +11,6 @@ Meteor.publish("Groups", function (query = {}) {
     return this.ready();
   }
   const select = query || {};
-  select.shopId = shopId;
+  select.shopId = {$in: [null, shopId]};
   return Groups.find(select);
 });
