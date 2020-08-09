@@ -19,7 +19,7 @@ function OperatorRoutes({
 }) {
   const isMobile = useMediaQuery("mobile");
   const uiContext = useContext(UIContext);
-
+  console.log(routes.map(r => r.path));
   return (
     <Switch>
       {routes.map((route) => (

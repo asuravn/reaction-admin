@@ -10,7 +10,7 @@ import useCurrentInternalShopId from "./useCurrentInternalShopId.js";
 export default function useCurrentShopId() {
   const [internalShopId] = useCurrentInternalShopId();
   const [currentShopId, setCurrentShopId] = useState(null);
-  console.log('internalShopId', internalShopId);
+  // console.log('internalShopId', internalShopId);
   useEffect(() => {
     let isMounted = true;
 
@@ -18,7 +18,7 @@ export default function useCurrentShopId() {
       { namespace: "Shop", id: internalShopId }
     ])
       .then(([opaqueShopId]) => {
-        console.log('internalShopId', isMounted, opaqueShopId);
+        // console.log('internalShopId', isMounted, opaqueShopId);
         if (isMounted) setCurrentShopId(opaqueShopId);
         return null;
       })

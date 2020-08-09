@@ -21,8 +21,11 @@ export default function useOperatorRoutes(options = {}) {
     filter,
     sort = defaultRouteSort
   } = options;
+  
+  const loggedInUser = Reaction.getUserId();
+  const shopId = Reaction.getUserShopId();
 
-  const routes = useMemo(() => {
+  let routes = useMemo(() => {
     let filteredRoutes;
     if (Array.isArray(groups)) {
       filteredRoutes = operatorRoutes.filter(({ group: routeGroup }) => groups.includes(routeGroup));
@@ -35,16 +38,12 @@ export default function useOperatorRoutes(options = {}) {
     if (sort) {
       filteredRoutes = filteredRoutes.sort(sort);
     }
-    const loggedInUser = Reaction.getUserId();
-    const shopId = Reaction.getUserShopId();
-    console.log(shopId, loggedInUser)
-    if (shopId && loggedInUser) {
-      filteredRoutes = filteredRoutes.filter((route) => !route.permissions ||
-        Reaction.hasPermission(route.permissions, loggedInUser, shopId));
-    }
-
+    
     return filteredRoutes;
-  }, [filter, groups, sort]);
-
+  }, [filter, groups, sort, loggedInUser, shopId]);
+  if (shopId && loggedInUser) {
+    routes = routes.filter((route) => !route.permissions ||
+      Reaction.hasPermission(route.permissions, loggedInUser, shopId));
+  }
   return routes;
 }

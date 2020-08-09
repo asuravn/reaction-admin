@@ -12,7 +12,7 @@ export default function useCurrentInternalShopId() {
   useEffect(() => {
     Tracker.autorun(() => {
       const shop = Reaction.getCurrentShop();
-      console.log("shop", shop);
+      // console.log("shop", shop);
       setCurrentShopId((shop && shop._id) || null);
     });
   });

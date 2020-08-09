@@ -147,6 +147,7 @@ export default {
       // flatten all group arrays into a single array
       // remove duplicate permissions
       // set permissions array with shopId as key on accountPermissions object
+      console.log('uniqueShopIds', uniqueShopIds);
       uniqueShopIds.forEach((shopId) => {
         const groupPermissionsForShop = groups.filter((group) => group.shopId === shopId).map((group) => group.permissions);
         const flattenedGroupPermissionsForShop = _.flattenDeep(groupPermissionsForShop);
@@ -186,7 +187,6 @@ export default {
       // TODO: Review this way of granting global access for owners
       permissions.push("owner");
       permissions = _.uniq(permissions);
-      
       if (accountPermissions['global'] && accountPermissions['global'].some((permission) => permissions.includes(permission))) {
         return true;
       }
