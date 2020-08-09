@@ -1,9 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Helmet from "react-helmet";
+import { useMutation } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
+import decodeOpaqueId from "@reactioncommerce/api-utils/decodeOpaqueId.js";
 import Grid from "@material-ui/core/Grid";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
@@ -12,6 +15,17 @@ import { i18next } from "/client/api";
 import ShopLogoWithData from "/imports/client/ui/components/ShopLogoWithData/ShopLogoWithData";
 import useIsAppLoading from "/imports/client/ui/hooks/useIsAppLoading.js";
 import useCurrentShopId from "/imports/client/ui/hooks/useCurrentShopId.js";
+import useAuth from "/imports/client/ui/hooks/useAuth.js";
+
+const createShopMutation = gql`
+  mutation createShop($input: CreateShopInput!) {
+    createShop(input: $input) {
+      shop {
+        _id
+      }
+    }
+  }
+`;
 
 /**
  * OperatorLanding
@@ -21,7 +35,7 @@ import useCurrentShopId from "/imports/client/ui/hooks/useCurrentShopId.js";
 function OperatorLanding() {
   const [isAppLoading] = useIsAppLoading();
   const [currentShopId] = useCurrentShopId();
-
+  
   if (isAppLoading) return <Components.Loading />;
 
   let content;

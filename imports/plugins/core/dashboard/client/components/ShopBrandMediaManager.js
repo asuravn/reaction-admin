@@ -28,7 +28,7 @@ function ShopBrandMediaManager(props) {
           />
         ))}
       </div>
-      <Components.MediaUploader canUploadMultiple metadata={metadata} shopId={shop._id} />
+      <Components.MediaUploader metadata={metadata} shopId={shop._id} />
     </div>
   );
 }

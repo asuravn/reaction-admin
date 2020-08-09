@@ -70,53 +70,58 @@ function MediaUploader(props) {
 
         // Poll server every two seconds to determine if all media has been successfully processed
         let isAllMediaProcessed = false;
-        const timerId = setInterval(async () => {
-          const { data: { product } } = await refetchProduct();
-
-          // Get media for product, variants and options
-          let allMedia = [product.media];
-          if (product.variants) {
-            product.variants.forEach((variant) => {
-              // Add variant media if set
-              if (variant.media) {
-                allMedia.push(variant.media);
-              }
-
-              // Add option media if set
-              if (variant.options) {
-                variant.options.forEach((option) => {
-                  allMedia.push(option.media);
-                });
-              }
+        if (refetchProduct) {
+          const timerId = setInterval(async () => {
+    
+            const {data: {product}} = await refetchProduct();
+    
+            // Get media for product, variants and options
+            let allMedia = [product.media];
+            if (product.variants) {
+              product.variants.forEach((variant) => {
+                // Add variant media if set
+                if (variant.media) {
+                  allMedia.push(variant.media);
+                }
+        
+                // Add option media if set
+                if (variant.options) {
+                  variant.options.forEach((option) => {
+                    allMedia.push(option.media);
+                  });
+                }
+              });
+            }
+    
+            allMedia = _.flatten(allMedia);
+    
+            const mediaItems = [];
+            allMedia.forEach((media) => {
+              const {id} = decodeOpaqueId(media._id);
+              mediaItems.push({id, thumbnailUrl: media.URLs.small});
             });
-          }
-
-          allMedia = _.flatten(allMedia);
-
-          const mediaItems = [];
-          allMedia.forEach((media) => {
-            const { id } = decodeOpaqueId(media._id);
-            mediaItems.push({ id, thumbnailUrl: media.URLs.small });
-          });
-
-          isAllMediaProcessed = uploadedMediaIds.every((uploadedMediaId) => {
-            const mediaItem = mediaItems.find((item) => item.id === uploadedMediaId);
-
-            // If a url has been generated, then these media items has been processed successfully.
-            return mediaItem && mediaItem.thumbnailUrl !== String(null);
-          });
-
-          if (isAllMediaProcessed) {
-            setIsUploading(false);
+    
+            isAllMediaProcessed = uploadedMediaIds.every((uploadedMediaId) => {
+              const mediaItem = mediaItems.find((item) => item.id === uploadedMediaId);
+      
+              // If a url has been generated, then these media items has been processed successfully.
+              return mediaItem && mediaItem.thumbnailUrl !== String(null);
+            });
+    
+            if (isAllMediaProcessed) {
+              setIsUploading(false);
+              clearTimeout(timerId);
+            }
+          }, 2000);
+  
+          // Stop polling after 30 seconds
+          setTimeout(() => {
             clearTimeout(timerId);
-          }
-        }, 2000);
+            setIsUploading(false);
+          }, 30000);
+        }
 
-        // Stop polling after 30 seconds
-        setTimeout(() => {
-          clearTimeout(timerId);
-          setIsUploading(false);
-        }, 30000);
+        
 
         return null;
       })

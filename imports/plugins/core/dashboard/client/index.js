@@ -50,6 +50,7 @@ registerOperatorRoute({
   group: "settings",
   MainComponent: SystemSettingsRegion,
   path: "/settings/system",
+  permissions: ["reaction:legacy:shops/marketplace"],
   priority: 300,
   sidebarI18nLabel: "shopSettings.systemInfo.title"
 });

@@ -15,3 +15,4 @@ Subscriptions.Groups = Subscriptions.Manager.subscribe("Groups");
 Subscriptions.MyAccount = Subscriptions.Manager.subscribe("MyAccount");
 Subscriptions.PrimaryShop = Subscriptions.Manager.subscribe("PrimaryShop");
 Subscriptions.UserShop = Subscriptions.Manager.subscribe("UserShop");
+Subscriptions.MyUser = Subscriptions.Manager.subscribe("MyUser");

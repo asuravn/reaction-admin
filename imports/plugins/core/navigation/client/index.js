@@ -12,6 +12,7 @@ registerOperatorRoute({
   LayoutComponent: null,
   MainComponent: NavigationDashboard,
   path: "/navigation",
+  permissions: ["reaction:legacy:shops/marketplace"],
   // eslint-disable-next-line react/display-name
   SidebarIconComponent: (props) => <LinkIcon {...props} />,
   sidebarI18nLabel: "admin.navigation.navigation"

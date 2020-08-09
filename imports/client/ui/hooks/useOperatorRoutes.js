@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Reaction } from "/client/api";
 import { operatorRoutes } from "../index";
 
 export const defaultRouteSort = (routeA, routeB) => (
@@ -33,6 +34,13 @@ export default function useOperatorRoutes(options = {}) {
 
     if (sort) {
       filteredRoutes = filteredRoutes.sort(sort);
+    }
+    const loggedInUser = Reaction.getUserId();
+    const shopId = Reaction.getUserShopId();
+    console.log(shopId, loggedInUser)
+    if (shopId && loggedInUser) {
+      filteredRoutes = filteredRoutes.filter((route) => !route.permissions ||
+        Reaction.hasPermission(route.permissions, loggedInUser, shopId));
     }
 
     return filteredRoutes;

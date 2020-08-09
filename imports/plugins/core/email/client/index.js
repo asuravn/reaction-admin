@@ -8,6 +8,7 @@ registerOperatorRoute({
   path: "/settings/email",
   MainComponent: EmailSettingsRegion,
   priority: 150,
+  permissions: ["reaction:legacy:shops/marketplace"],
   sidebarI18nLabel: "admin.dashboard.emailLabel"
 });
 

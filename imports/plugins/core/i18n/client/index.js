@@ -7,6 +7,7 @@ registerOperatorRoute({
   group: "settings",
   MainComponent: LocalizationSettingsRegion,
   path: "/settings/localization",
+  permissions: ["reaction:legacy:shops/marketplace"],
   sidebarI18nLabel: "admin.i18nSettings.shopLocalization",
   priority: 160
 });

@@ -8,6 +8,7 @@ registerOperatorRoute({
   MainComponent: TaxSettingsRegion,
   priority: 130,
   path: "/settings/tax-settings",
+  permissions: ["reaction:legacy:shops/marketplace"],
   sidebarI18nLabel: "admin.dashboard.taxesLabel"
 });
 

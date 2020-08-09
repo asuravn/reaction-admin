@@ -8,6 +8,7 @@ registerOperatorRoute({
   MainComponent: AddressValidationSettingsRegion,
   path: "/settings/address-validation-settings",
   priority: 170,
+  permissions: ["reaction:legacy:shops/marketplace"],
   sidebarI18nLabel: "addressValidation.title"
 });
 

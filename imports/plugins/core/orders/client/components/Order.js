@@ -15,6 +15,8 @@ import OrderCardFulfillmentGroups from "./OrderCardFulfillmentGroups";
 import OrderHeader from "./OrderHeader";
 import OrderPayments from "./OrderPayments";
 import OrderRefunds from "./OrderRefunds";
+import { Reaction } from "/client/api";
+
 
 const styles = (theme) => ({
   tabs: {
@@ -34,7 +36,7 @@ function Order(props) {
   const handleTabChange = (event, value) => {
     setTab(value);
   };
-
+  const haveRefundPermission = Reaction.hasPermission("reaction:legacy:orders/refund:payment");
   return (
     <Fragment>
       <Helmet title={`Order Details for order reference #${order.referenceId}`} />
@@ -47,7 +49,10 @@ function Order(props) {
         <Grid className={classes.tabs} item xs={12}>
           <Tabs value={currentTab} onChange={handleTabChange}>
             <Tab label={i18next.t("fulfillment", "Fulfillment")} />
-            <Tab label={i18next.t("refunds", "Refunds")} />
+            {haveRefundPermission && (
+              <Tab label={i18next.t("refunds", "Refunds")} />
+            )}
+            
           </Tabs>
           <Divider />
         </Grid>
@@ -61,7 +66,7 @@ function Order(props) {
             </Grid>
           </Grid>
         }
-        {currentTab === 1 &&
+        {currentTab === 1 && haveRefundPermission &&
           <Grid item xs={12}>
             <OrderRefunds order={order} />
           </Grid>

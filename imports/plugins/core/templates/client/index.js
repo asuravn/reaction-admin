@@ -9,6 +9,7 @@ import "./templates/settings.js";
 registerOperatorRoute({
   group: "settings",
   path: "/settings/templates",
+  permissions: ["reaction:legacy:shops/marketplace"],
   MainComponent: EmailTemplateSettingsRegion,
   sidebarI18nLabel: "admin.settings.templateSettingsLabel",
   priority: 190

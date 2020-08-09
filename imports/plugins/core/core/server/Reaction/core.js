@@ -307,7 +307,8 @@ export default {
   getUserShopId(userId) {
     check(userId, String);
 
-    const user = AccountsCollection.findOne({ _id: userId });
+    // const user = AccountsCollection.findOne({ _id: userId });
+    const user = Meteor.user();
     if (!user) return null;
 
     return _.get(user, "profile.preferences.reaction.activeShopId");
