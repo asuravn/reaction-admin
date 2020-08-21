@@ -61,7 +61,7 @@ Meteor.publish("MyAccount", function publishMyAccount() {
 Meteor.publish("MyUser", function publishMyUser() {
   const userId = Reaction.getUserId();
   if (!userId) return this.ready();
-  return Meteor.users.find({_id: this.userId});
+  return Meteor.users.find({_id: userId});
 });
 
 /**

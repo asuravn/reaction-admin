@@ -60,7 +60,9 @@ export default function useAuth() {
       notifyOnNetworkStatusChange: true,
       onError(error) {
         // Can't find any more reliable way to check the status code from within this hook
-        if (typeof error.message === "string" && error.message.includes("Received status code 401")) {
+        if ((typeof error.message === "string" && error.message.includes("Received status code 401")) ||
+          (error.message || '').includes('Access Denied')
+        ) {
           // Token is expired or user was deleted from database
           oidcLogout();
         } else {
@@ -69,7 +71,7 @@ export default function useAuth() {
       }
     }
   );
-
+  
   // Perform a `viewer` query whenever we get a new access token
   useEffect(() => {
     if (accessToken) getViewer();

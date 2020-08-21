@@ -67,7 +67,7 @@ Meteor.startup(() => {
   const apolloClient = initApollo();
 
   Tracker.autorun((computation) => {
-    const primaryShopSub = Meteor.subscribe("PrimaryShop");
+    const primaryShopSub = Meteor.subscribe("UserShop");
 
     if (primaryShopSub.ready()) {
       ReactDOM.render(

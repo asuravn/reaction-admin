@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Components, composeWithTracker, registerComponent } from "@reactioncommerce/reaction-components";
+import decodeOpaqueId from "@reactioncommerce/api-utils/decodeOpaqueId.js";
 import { Media } from "/imports/plugins/core/files/client";
 
 /**
@@ -50,9 +51,9 @@ const composer = (props, onData) => {
   const { shop } = props;
 
   if (!shop) return;
-
+  console.log(decodeOpaqueId(shop._id));
   const brandMedia = Media.findLocal({
-    "metadata.shopId": shop.internalId,
+    "metadata.shopId": decodeOpaqueId(shop._id).id,
     "metadata.type": "brandAsset"
   });
 

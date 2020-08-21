@@ -8,16 +8,18 @@ Meteor.publish("PrimaryShop", () => Shops.find({
   limit: 1
 }));
 
-Meteor.publish("UserShop", function () {
-  const user = Reaction.getUser();
-  if (!user) {
-    return this.ready();
-  }
-  const { profile } = user;
-  const shopId = profile &&
-    profile.preferences &&
-    profile.preferences.reaction &&
-    profile.preferences.reaction.activeShopId;
-  
-  return Shops.find({ _id: shopId });
+Meteor.publish("UserShop", function userShop() {
+  // if (Meteor.userId()) {
+  //   return this.ready();
+  // }
+  // const { profile } = Meteor.users.findOne(Meteor.userId(), { fields: { profile: 1 } });
+  // const shopId = profile &&
+  //   profile.preferences &&
+  //   profile.preferences.reaction &&
+  //   profile.preferences.reaction.activeShopId;
+  //
+  // if (!shopId) {
+  //   return this.ready();
+  // }
+  return Shops.find({});
 });

@@ -22,9 +22,7 @@ function ProfileImageWithData(props) {
 
   const history = useHistory();
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-
-  if (!viewer) return null;
-
+  
   return (
     <Fragment>
       <ButtonBase
@@ -33,7 +31,7 @@ function ProfileImageWithData(props) {
           setMenuAnchorEl(event.currentTarget);
         }}
       >
-        <ProfileImage viewer={viewer} {...props} />
+        {viewer && <ProfileImage viewer={viewer} {...props} />}
       </ButtonBase>
 
       <Menu
@@ -42,14 +40,17 @@ function ProfileImageWithData(props) {
         open={Boolean(menuAnchorEl)}
         onClose={() => setMenuAnchorEl(null)}
       >
-        <MenuItem
-          onClick={() => {
-            setMenuAnchorEl(null); // close menu
-            history.push("/profile");
-          }}
-        >
-          {i18next.t("admin.userAccountDropdown.profileLabel")}
-        </MenuItem>
+        {viewer && (
+          <MenuItem
+            onClick={() => {
+              setMenuAnchorEl(null); // close menu
+              history.push("/profile");
+            }}
+          >
+            {i18next.t("admin.userAccountDropdown.profileLabel")}
+          </MenuItem>
+        )}
+        
         <MenuItem onClick={logout}>{i18next.t("accountsUI.signOut")}</MenuItem>
       </Menu>
     </Fragment>

@@ -17,6 +17,7 @@ import { Shops } from "/lib/collections";
 function updateShopBrandAssets(asset, shopId = Reaction.getShopId(), userId = Reaction.getUserId()) {
   check(asset, {
     mediaId: String,
+    url: String,
     type: String
   });
   check(shopId, String);
@@ -42,6 +43,9 @@ function updateShopBrandAssets(asset, shopId = Reaction.getShopId(), userId = Re
         "brandAssets.$": {
           mediaId: asset.mediaId,
           type: asset.type
+        },
+        "shopLogoUrls": {
+          primaryShopLogoUrl: asset.url
         }
       }
     });
@@ -70,6 +74,7 @@ function updateShopBrandAssets(asset, shopId = Reaction.getShopId(), userId = Re
 export default function updateBrandAssets(asset) {
   check(asset, {
     mediaId: String,
+    url: String,
     type: String
   });
 

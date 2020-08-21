@@ -5,16 +5,11 @@
 
 
 // folder path where all assets live
-const basePath = "https://assets.reactioncommerce.com/favicon/";
+const basePath = "/resources/";
 
 
 // define link tags
 const linkTags = [
-  {
-    rel: "apple-touch-icon",
-    sizes: "180x180",
-    href: `${basePath}apple-touch-icon.png`
-  },
   {
     rel: "icon",
     type: "image/png",
@@ -26,15 +21,6 @@ const linkTags = [
     type: "image/png",
     sizes: "16x16",
     href: `${basePath}favicon-16x16.png`
-  },
-  {
-    rel: "manifest",
-    href: `${basePath}manifest.json`
-  },
-  {
-    rel: "mask-icon",
-    color: "#5bbad5",
-    href: `${basePath}safari-pinned-tab.svg`
   },
   {
     rel: "shortcut icon",

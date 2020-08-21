@@ -11,7 +11,7 @@ import { withComponents } from "@reactioncommerce/components-context";
 import withPrimaryShopId from "/imports/plugins/core/graphql/lib/hocs/withPrimaryShopId";
 import GenericErrorBoundary from "../GenericErrorBoundary";
 
-const defaultLogo = "/resources/reaction-logo-circular.svg";
+const defaultLogo = "/resources/logo.png";
 
 const getShop = gql`
   query getShop($id: ID!) {
@@ -55,7 +55,7 @@ function ShopLogoWithData({ className, classes, shopId, shouldShowShopName, link
         to={linkTo}
       >
         <img
-          alt="Reaction Commerce"
+          alt="Myanbur"
           className={classes.logo}
           src={defaultLogo}
           width={size}
@@ -66,7 +66,7 @@ function ShopLogoWithData({ className, classes, shopId, shouldShowShopName, link
             component="span"
             className={classes.logoName}
           >
-            Reaction Commerce
+            Myanbur
           </Typography>
         }
       </Link>

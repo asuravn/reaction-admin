@@ -37,7 +37,7 @@ function ShopBrandImageOption(props) {
   const handleClick = () => {
     if (isSelected) return;
 
-    const asset = { mediaId: media._id, type: "navbarBrandImage" };
+    const asset = { mediaId: media._id, type: "navbarBrandImage", url: media && media.url({ absolute: true, store: "large" }) };
 
     Meteor.call("shop/updateBrandAssets", asset, (error, result) => {
       if (error || result !== 1) {
