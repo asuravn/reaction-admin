@@ -70,5 +70,6 @@ If you forget to sign-off your commits, the DCO bot will remind you and give you
 ### License
 Reaction Admin is [GNU GPLv3 Licensed](./LICENSE.md)
 
+docker build -t reaction-admin .
 docker run -itd --name admin -p 4080:4080 -p 9231:9229 --env-file .env --network reaction.localhost reaction-admin
 

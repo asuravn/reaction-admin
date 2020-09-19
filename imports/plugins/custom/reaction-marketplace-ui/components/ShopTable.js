@@ -15,12 +15,6 @@ function ShopTable() {
 
   const columns = useMemo(() => [
     {
-      Header: i18next.t("marketplaceSettings.table.headers.id"),
-      accessor: "_id",
-      // eslint-disable-next-line react/no-multi-comp,react/display-name,react/prop-types
-      Cell: ({ row }) => <Fragment>{row.values._id}</Fragment>
-    },
-    {
       Header: i18next.t("marketplaceSettings.table.headers.date"),
       accessor: "createdAt",
       // eslint-disable-next-line react/no-multi-comp,react/display-name,react/prop-types
@@ -43,7 +37,19 @@ function ShopTable() {
       accessor: "productCount",
       // eslint-disable-next-line react/no-multi-comp,react/display-name,react/prop-types
       Cell: ({ row }) => <Fragment>{row.values.productCount}</Fragment>
+    },{
+      Header: i18next.t("marketplaceSettings.table.headers.status"),
+      accessor: "status",
+      // eslint-disable-next-line react/no-multi-comp,react/display-name,react/prop-types
+      Cell: ({ row }) => <Fragment>{'Active'}</Fragment>
+    },
+    {
+      Header: i18next.t("marketplaceSettings.table.headers.subscription"),
+      accessor: "subscription",
+      // eslint-disable-next-line react/no-multi-comp,react/display-name,react/prop-types
+      Cell: ({ row }) => <Fragment>{row.values.subscription || 'Monthly'}</Fragment>
     }
+    
   ], []);
 
   const onFetchData = useCallback(async ({ pageIndex, pageSize }) => {
